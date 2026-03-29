@@ -2,7 +2,10 @@ const NOTION_SECRET = process.env.NOTION_SECRET;
 const NOTION_VERSION = "2022-06-28";
 
 exports.handler = async (event) => {
-  const path = event.path.replace("/.netlify/functions/notion", "");
+  // Strip both the redirect path (/api) and the direct function path
+  const path = event.path
+    .replace(/^\/.netlify\/functions\/notion/, "")
+    .replace(/^\/api/, "");
   const url = `https://api.notion.com/v1${path}`;
 
   const headers = {
